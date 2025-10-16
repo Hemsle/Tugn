@@ -1,41 +1,53 @@
 <!--$lib/components/Searched.svelte-->
 
 <script>
-    import "./Selection.svelte";
-
-    export let data;
-
-    const exercises = data.exercises || [];
-    let filteredExercises = [];
-
-    function search() {//Koppla selection till searched för att göra en lista med anpassade övningar DETTA MÅSTE FIXAS
-        const sMuscle = selectedMuscle;
-        const sEquipment = selectedEquipment;
-        const sType = selectedTypes;
-        const sDifficulty = selectedDifficulty;
-
-    console.log("Searched: " + sMuscle + ", " + sEquipment + ", " + sType + ", " + sDifficulty);
-
-        filteredExercises = excercises.filter(exercises => {
-            const muscleMatch = sMuscle === "all_muscles" || exercise.muscle === sMuscle;
-            const equipmentMatch = sEquipment === "all_equipments" || exercise.equipment === sEquipment;
-            const typeMatch = sType === "all_types" || exercise.type === sType;
-            const difficultyMatch = sDifficulty === "all_difficulties" || exercise.difficulty === sDifficulty;
-
-            return muscleMatch && equipmentMatch && typeMatch && difficultyMatch;
-        });
-
-        console.log("Filtered Exercises:", filteredExercises);
-
-    }
+    import { formatOption } from "../utils/format";
+    import { filteredExercises } from "../stores/exerciseStore.js";
 </script>
 
-
-<div class="exercise-list">
-    {#each filteredExercises as exercise}
-    <div>{exercise.name}</div>
-    {/each}
+<div>
+    <h1>Filtered Exercises</h1>
 </div>
+{#if $filteredExercises.length > 0}
+    <div class="exercise-list">
+        {#each $filteredExercises as exercise}
+            <h2>
+                {exercise.name}
+                <p>Primary Muscle: {formatOption(exercise.muscle)}</p>
+                <p>Equipment: {formatOption(exercise.equipment)}</p>
+                <p>Exercise Type:{formatOption(exercise.type)}</p>
+                <p>Difficulty: {formatOption(exercise.difficulty)}</p>
+            </h2>
+        {/each}
+    </div>
+{:else}
+<p style="font-size: large; margin-left: 2rem;">No exercises found for the selected filters</p>
+{/if}
 
 <style lang="scss">
+    div {
+        margin: 2rem;
+    }
+    .exercise-list {
+        margin-top: -1.2rem;
+        height: 89%;
+        overflow-x: auto;
+        padding: 1rem;
+        border: 0.1rem solid rgb(231, 231, 231);
+        border-radius: 1.5rem;
+        h2 {
+            font-size: 2rem;
+            padding: 2rem;
+            margin: 2rem;
+            p {
+                font-size: small;
+                font-weight: 100s;
+            }
+            &:hover {
+                background-color: rgb(231, 231, 231);
+                border: 0.1 rem solid rgb(231, 231, 231);
+                border-radius: 1rem;
+            }
+        }
+    }
 </style>

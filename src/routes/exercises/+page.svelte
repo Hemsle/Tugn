@@ -1,14 +1,18 @@
 <!--routes/exercises/+page.svelte-->
 <script>
     import Library from "$lib/components/Library.svelte";
-    import Searched from "$lib/components/Searched.svelte";
+    import Searched from "$lib/components/Searched.svelte"; 
     import Exercise from "$lib/components/Exercise.svelte";
+    import { searched } from "../../lib/stores/exerciseStore"
     export let data;
 </script>
 
 <section id="exerciseInfo">
-    <Searched {data} />
-    <Exercise />
+    {#if $searched === true}
+    <Searched />
+    {:else}
+    <Exercise {data}/>
+    {/if}
 </section>
 
 <section id="search">
@@ -33,6 +37,6 @@
     #exerciseInfo {
             height: 70%;
             left: 25%;
-            width: 50rem;
+            width: 45%;
     }
 </style>

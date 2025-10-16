@@ -1,8 +1,8 @@
 <!--$lib/componentes/Selection.svelte-->
 
 <script>
-    import Exercise from "./Exercise.svelte";
-    import Searched from "./Searched.svelte";
+    import { formatOption } from "../utils/format.js";
+    import { filteredExercises, searched } from "../stores/exerciseStore";
 
     export let data;
 
@@ -19,26 +19,33 @@
 
     let selectedMuscle = "all_muscles";
     let selectedEquipment = "all_equipments";
-    let selectedTypes = "all_types";
+    let selectedType = "all_types";
     let selectedDifficulty = "all_difficulties";
 
-    function formatOption(str) {
-        if (!str) return "";
-        return str
-            .replace(/_/g, ' ')
-            .replace(/-/g, '')        // Byt ut understreck mot mellanslag
-            .replace(/\b\w/g, c => c.toUpperCase()); // Gör första bokstaven i varje ord stor
-    }
+    function search() {
+        if(selectedMuscle === "all_muscles" && 
+            selectedEquipment === "all_equipments" && 
+            selectedType === "all_types" && 
+            selectedDifficulty === "all_difficulties"
+        ) {
+            alert("Please select at least one filter before searching.");
+            return; 
+        }
 
-    function handleSearch() {
-        // Skicka de valda alternativen till parent/Searched
-        dispatch('search', {
-            muscle: selectedMuscle,
-            equipment: selectedEquipment,
-            type: selectedTypes,
-            difficulty: selectedDifficulty
+        const results = exercises.filter(exercise => {
+            const muscleMatch = selectedMuscle === "all_muscles" || exercise.muscle === selectedMuscle;
+            const equipmentMatch = selectedEquipment === "all_equipments" || exercise.equipment === selectedEquipment;
+            const typeMatch = selectedType === "all_types" || exercise.type === selectedType;
+            const difficultyMatch = selectedDifficulty === "all_difficulties" || exercise.difficulty === selectedDifficulty;
+
+            return muscleMatch && equipmentMatch && typeMatch && difficultyMatch;
         });
-    }
+    
+        searched.set(true);
+        filteredExercises.set(results); // Uppdaterar store
+        console.log("Filtered Exercises:", results);
+    }   
+    
 </script>
 
 <select bind:value={selectedMuscle} id="muscle-select">
@@ -53,7 +60,7 @@
         <option value={equipment}>{formatOption(equipment)}</option>
     {/each}
 </select>
-<select bind:value={selectedTypes} id="type-select">
+<select bind:value={selectedType} id="type-select">
     <option value="all_types">All Types</option>
     {#each types as type}
         <option value={type}>{formatOption(type)}</option>
@@ -65,7 +72,18 @@
         <option value={difficulty}>{formatOption(difficulty)}</option>
     {/each}
 </select>
-<button on:click={handleSearch}>Search</button>
+<button on:click={search}>Search Exercises</button>
+
+<button on:click={() => {
+    selectedMuscle = "all_muscles";
+    selectedEquipment = "all_equipments";
+    selectedType = "all_types";
+    selectedDifficulty = "all_difficulties";
+    searched.set(false);
+    filteredExercises.set([]);
+}}>
+    Reset
+</button>
 
 <style lang="scss">
     select {
