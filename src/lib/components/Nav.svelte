@@ -29,6 +29,8 @@
                 &:hover {
                     background-color: var(--third);
                     border: 0.1rem solid var(--third);
+                    border-bottom: 0.4rem solid var(--secondary);
+
                 }
                 a {
                     display: flex;

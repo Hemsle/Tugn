@@ -11,7 +11,7 @@
     {#if $searched === true}
     <Searched />
     {:else}
-    <Exercise {data}/>
+    <Exercise />
     {/if}
 </section>
 
@@ -26,6 +26,7 @@
         top: 3rem;
         border: 0.1rem solid rgb(231, 231, 231);
         border-radius: 1.5rem;
+        border-bottom: 0.3rem solid rgb(214, 214, 214);
     }
 
     #search {
