@@ -17,6 +17,8 @@
         </div>
     {:else}
         <h1>No exercise selected</h1>
+        <img src="icons/tugnIcon.png" alt="Hammare" 
+			/>
     {/if}
 </div>
 
@@ -42,7 +44,7 @@
             border: 0.1rem solid rgb(231, 231, 231);
             border-radius: 1.5rem;
             max-height: 75%;
-            h2{ 
+            h2 {
                 font-size: 2rem;
                 position: sticky;
             }
@@ -51,6 +53,34 @@
                 margin-left: 3rem;
                 margin-right: 3rem;
             }
+        }
+    }
+
+    /* From Uiverse.io by SteveBloX */
+    img {
+        box-sizing: border-box;
+        width: 40rem;
+        background: rgba(217, 217, 217, 0.58);
+        border: 1px solid white;
+        box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
+        backdrop-filter: blur(5px);
+        border-radius: 17px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 20s;
+        user-select: none;
+        font-weight: bolder;
+        color: black;
+
+        &:hover {
+            border: 1px solid black;
+            transform: scale(10) rotate(-90deg);
+        }
+
+        &:active {
+            transform: scale(0.001) rotateZ(90deg);
+            border-radius: 20rem;
+            box-shadow: 12rem 17rem 51rem rgba(0, 0, 0, 0.22);
         }
     }
 </style>

@@ -2,7 +2,7 @@
 
 <script>
     import { formatOption } from "../utils/format.js";
-    import { filteredExercises, searched } from "../stores/exerciseStore";
+    import { filteredExercises, searched, selectedExercise } from "../stores/exerciseStore";
 
     export let data;
 
@@ -80,6 +80,7 @@
     selectedType = "all_types";
     selectedDifficulty = "all_difficulties";
     searched.set(false);
+    selectedExercise.set(null);
     filteredExercises.set([]);
 }}>
     Reset

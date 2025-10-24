@@ -3,7 +3,7 @@ import { json } from "@sveltejs/kit";
 
 export async function load() {
     const apiKey = 'hSPjo6dvdgFyNfRBO7EVRQ==31s6QTzAQhWCWldf';
-    let muscle = ''; 
+    let muscle = '';
 
     const muscleGroups = [
         'abdominals',
@@ -34,7 +34,7 @@ export async function load() {
             urls.map(url =>
                 fetch(url, { headers: { 'X-Api-Key': apiKey } })
             )
-        );  
+        );
 
         // Konvertera alla responses till JSON
         const results = await Promise.all(responses.map(res => res.json()));

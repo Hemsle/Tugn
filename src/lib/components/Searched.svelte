@@ -24,7 +24,7 @@
                 <h2>{exercise.name}</h2>
                 <p>Primary Muscle: {formatOption(exercise.muscle)}</p>
                 <p>Equipment: {formatOption(exercise.equipment)}</p>
-                <p>Exercise Type:{formatOption(exercise.type)}</p>
+                <p>Exercise Type: {formatOption(exercise.type)}</p>
                 <p>Difficulty: {formatOption(exercise.difficulty)}</p>
             </button>
         {/each}
