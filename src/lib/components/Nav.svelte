@@ -6,7 +6,7 @@
 <nav>
     <ul>
         <li><a href="/"> <img src="/icons/homeagain.png" alt="home" />Home</a> </li>
-        <li><a href="/"> <img src="/icons/wirte.png" alt="notes" />Routines</a></li>
+        <li><a href="/routines" class:active={page.url.pathname === "/routines"}><img src="/icons/wirte.png" alt="notes" />Routines</a></li>
         <li><a href="/exercises" class:active={page.url.pathname === "/exercises"}><img src="/icons/dumbbell.png" alt="dumbbell" />Exercises</a></li>
         <li><a href="/"> <img src="/icons/user.png" alt="user" />Profile</a></li>
         <li><a href="/"><img src="/icons/settings.png" alt="cogwheel" />Settings</a></li>
@@ -30,7 +30,11 @@
                     background-color: var(--third);
                     border: 0.1rem solid var(--third);
                     border-bottom: 0.4rem solid var(--secondary);
+                }
 
+                &:active{
+                        border-top: 0.1rem solid var(--primary); 
+                        border-bottom: none; 
                 }
                 a {
                     display: flex;

@@ -74,6 +74,11 @@
                 border: 0.1 rem solid rgb(231, 231, 231);
                 border-radius: 1rem;
                 border-bottom: 0.3rem solid rgb(214, 214, 214);
+
+                &:active{
+                    border: 0.1rem, solid rgb(199, 199, 199);
+                    border-bottom: 0.3rem solid rgb(214, 214, 214);
+                }
             }
         }
     }

@@ -88,6 +88,11 @@
 
 <style lang="scss">
     select {
+        font-family: "DM sans", sans-serif;
+        border-radius: 1rem;
         width: 12rem;
+    }
+    button {
+        font-family: "DM sans", sans-serif;
     }
 </style>
