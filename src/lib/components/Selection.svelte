@@ -2,50 +2,105 @@
 
 <script>
     import { formatOption } from "../utils/format.js";
-    import { filteredExercises, searched, selectedExercise } from "../stores/exerciseStore";
+    import {
+        filteredExercises,
+        searched,
+        selectedExercise,
+    } from "../stores/exerciseStore";
 
     export let data;
 
+    console.log(data); 
+    
     const exercises = data.exercises || [];
     const muscles = data.muscles || [];
     const equipments = data.equipments || [];
+
+    console.log(equipments);
+
     const types = data.types || [];
     const difficulties = data.difficulties || [];
-
-    console.log("Muscles:", muscles);
-    console.log("Equipment:", equipments);
-    console.log("Type:", types);
-    console.log("Difficulty:", difficulties);
 
     let selectedMuscle = "all_muscles";
     let selectedEquipment = "all_equipments";
     let selectedType = "all_types";
     let selectedDifficulty = "all_difficulties";
+    let searchTerms = ""; //gäller för sökning av utbudet.
 
-    function search() {
-        if(selectedMuscle === "all_muscles" && 
-            selectedEquipment === "all_equipments" && 
-            selectedType === "all_types" && 
-            selectedDifficulty === "all_difficulties"
-        ) {
-            alert("Please select at least one filter before searching.");
-            return; 
-        }
+    //tanken är att denna ska ändras varje gång en variable ändras...
+    $: {
+        const query = searchTerms.toLowerCase().trim();
 
-        const results = exercises.filter(exercise => {
+        const results = exercises.filter((exercise) => {
             const muscleMatch = selectedMuscle === "all_muscles" || exercise.muscle === selectedMuscle;
             const equipmentMatch = selectedEquipment === "all_equipments" || exercise.equipment === selectedEquipment;
-            const typeMatch = selectedType === "all_types" || exercise.type === selectedType;
+            const typeMatch =selectedType === "all_types" || exercise.type === selectedType;
             const difficultyMatch = selectedDifficulty === "all_difficulties" || exercise.difficulty === selectedDifficulty;
 
-            return muscleMatch && equipmentMatch && typeMatch && difficultyMatch;
+            const termsSearch = query === "" ||
+                exercise.name.toLowerCase().includes(query) ||
+                exercise.muscle.toLowerCase().includes(query) ||
+                exercise.equipment.toLowerCase().includes(query);
+
+            return muscleMatch && equipmentMatch && typeMatch && difficultyMatch && termsSearch;
         });
-    
-        searched.set(true);
-        filteredExercises.set(results); // Uppdaterar store
-        console.log("Filtered Exercises:", results);
-    }   
-    
+
+        //om ändringar sker
+        if(query !== "" || selectedMuscle !== "all_muscles" || selectedEquipment !== "all_equipments" || selectedType !== "all_types" || selectedDifficulty !== "all_difficulties") {
+            filteredExercises.set(results);
+            searched.set(true); 
+        }
+    }
+
+    //**
+    //    function search() {
+    //        if (
+    //            selectedMuscle === "all_muscles" &&
+    //            selectedEquipment === "all_equipments" &&
+    //            selectedType === "all_types" &&
+    //            selectedDifficulty === "all_difficulties"
+    //        ) {
+    //            alert("Please select at least one filter before searching.");
+    //            console.log(data.exercises);
+    //            console.log(data.muscles);
+    //            console.log(data.equipments);
+    //            console.log(data.difficulties);
+    //            return;
+    //        }
+    //
+    //        const results = exercises.filter((exercise) => {
+    //            const muscleMatch =
+    //                selectedMuscle === "all_muscles" ||
+    //                exercise.muscle === selectedMuscle;
+    //            const equipmentMatch =
+    //                selectedEquipment === "all_equipments" ||
+    //                exercise.equipment === selectedEquipment;
+    //            const typeMatch =
+    //                selectedType === "all_types" || exercise.type === selectedType;
+    //            const difficultyMatch =
+    //                selectedDifficulty === "all_difficulties" ||
+    //                exercise.difficulty === selectedDifficulty;
+    //
+    //            return (
+    //                muscleMatch && equipmentMatch && typeMatch && difficultyMatch
+    //            );
+    //        });
+    //
+    //        searched.set(true);
+    //        filteredExercises.set(results); // Uppdaterar store, de sorterade övningarna skickas sedan till searhed
+    //        console.log("Filtered Exercises:", results);
+    //    }
+
+    function resetFilters() {
+        selectedMuscle = "all_muscles";
+        selectedEquipment = "all_equipments";
+        selectedType = "all_types";
+        selectedDifficulty = "all_difficulties";
+        searched.set(false);
+        selectedExercise.set(null);
+        filteredExercises.set([]);
+        searchTerms = "";
+    }
 </script>
 
 <select bind:value={selectedMuscle} id="muscle-select">
@@ -54,45 +109,45 @@
         <option value={muscle}>{formatOption(muscle)}</option>
     {/each}
 </select>
+
 <select bind:value={selectedEquipment} id="equipment-select">
     <option value="all_equipments">All Equipments</option>
     {#each equipments as equipment}
         <option value={equipment}>{formatOption(equipment)}</option>
     {/each}
 </select>
+
 <select bind:value={selectedType} id="type-select">
     <option value="all_types">All Types</option>
     {#each types as type}
         <option value={type}>{formatOption(type)}</option>
     {/each}
 </select>
+
 <select bind:value={selectedDifficulty} id="difficulty-select">
     <option value="all_difficulties">All Difficulties</option>
     {#each difficulties as difficulty}
         <option value={difficulty}>{formatOption(difficulty)}</option>
     {/each}
 </select>
-<button on:click={search}>Search Exercises</button>
 
-<button on:click={() => {
-    selectedMuscle = "all_muscles";
-    selectedEquipment = "all_equipments";
-    selectedType = "all_types";
-    selectedDifficulty = "all_difficulties";
-    searched.set(false);
-    selectedExercise.set(null);
-    filteredExercises.set([]);
-}}>
-    Reset
-</button>
+<input
+    id="searchfield"
+    type="text"
+    bind:value={searchTerms}
+    placeholder="Search for exercises..."
+/>
+<button onclick={resetFilters}> Reset </button>
 
 <style lang="scss">
     select {
-        font-family: "DM sans", sans-serif;
         border-radius: 1rem;
         width: 12rem;
+        margin-bottom: 0.5rem;
     }
-    button {
-        font-family: "DM sans", sans-serif;
+
+    input {
+        border-radius: 1.5rem;
+        padding: 0.3rem;
     }
 </style>

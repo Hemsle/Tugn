@@ -3,14 +3,16 @@
     import Library from "$lib/components/Library.svelte";
     import Searched from "$lib/components/Searched.svelte"; 
     import Exercise from "$lib/components/Exercise.svelte";
-    import { searched } from "../../lib/stores/exerciseStore"
-    export let data;
+
+    import { searched } from "$lib/stores/exerciseStore";
+
+    export let data;//från +layout.server.js 
 </script>
 
 <section id="exerciseInfo">
     {#if $searched === true}
     <Searched />
-    {:else}
+    {:else if $searched === false}
     <Exercise />
     {/if}
 </section>

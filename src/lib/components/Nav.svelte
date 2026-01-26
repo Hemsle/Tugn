@@ -22,34 +22,49 @@
                 font-size: 1.7rem;
                 align-items: center;
                 justify-content: center;
-                margin: 1.5rem;
-                border: 0.1rem solid var(--primary);
+                height: 5rem;
                 border-radius: 1rem;
-
-                &:hover {
-                    background-color: var(--third);
-                    border: 0.1rem solid var(--third);
-                    border-bottom: 0.4rem solid var(--secondary);
-                }
+                margin-left: 1.5rem;
+                margin-right: 1.5rem;
+                margin-top: 2rem;
 
                 &:active{
-                        border-top: 0.1rem solid var(--primary); 
-                        border-bottom: none; 
+                    border-bottom: none;
+                    border-top: 0.4rem solid var(--primary); 
                 }
                 a {
                     display: flex;
                     gap: 1rem;
                     align-items: center;
                     padding: 1rem;
-                    padding-right: 5rem;
                     text-decoration: none;
                     font-weight: bold   ;
                     color: var(--fourth);
+                    height: 5rem;
+                    background-color: var(--primary);
+
+                    &:hover {
+                        background-color: var(--third);
+                        border-radius: 1.5rem;
+                        height: 5.4rem;
+                        border-bottom: 0.4rem solid var(--secondary);
+                    }
+
+                    &:active {
+                        border-bottom: none;
+                        height: 5rem;
+                    }
                     
                     &.active {
                         color: var(--primary);
                         background-color: var(--fourth);
                         border-radius: 1rem;
+                        &:hover{
+                            border-bottom: 0.4rem solid var(--third);
+                        }
+                        &:active{
+                            border-bottom: none;
+                        }
                     }
                     img {
                         width: 2.5rem;

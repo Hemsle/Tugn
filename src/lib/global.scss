@@ -16,9 +16,23 @@
 html {
     font-size: 62.5%;
     font-family: "DM sans", sans-serif;
+
+    button, select, input{
+        font-family: "DM sans", sans-serif;
+    }
 }
 
 body {
     background-color: #f8f8f8;
 }
 
+select {
+    border: none;
+}
+
+button {
+    border: none;
+    &:hover {
+        background-color: rgb(207, 207, 207);
+    }
+}

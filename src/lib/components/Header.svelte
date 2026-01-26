@@ -3,7 +3,7 @@
 </script>
 
 <header>
-    <img src="icons/tugnIcon.png" alt="Hammare" />
+    <img src="icons/tugnIcon.png" alt="Hammare"/>
     <h1>TUGN</h1>
     <Nav />
 </header>
@@ -30,6 +30,7 @@
             font-size: 3rem;
             font-weight: bold;
             margin: 2rem;
+            margin-bottom: 4rem;
         }
     }
 </style>

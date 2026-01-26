@@ -1,4 +1,4 @@
-//routes/exercises/+page.server.js
+//+page.server.js
 import { json } from "@sveltejs/kit";
 
 export async function load() {
@@ -48,10 +48,10 @@ export async function load() {
         const muscles = [...new Set(exercises.map(ex => ex.muscle))].sort();
         const equipments = [...new Set(exercises.map(ex => ex.equipment))].sort();
         const types = [...new Set(exercises.map(ex => ex.type))].sort();
-        const difficulties = [... new Set(exercises.map(ex => ex.difficulty))].sort();
+        const difficulties = [... new Set(exercises.map(ex => ex.difficulty))];
 
         return { exercises, muscles, equipments, types, difficulties };
     } catch (err) {
-        return { exercises: [], muscles: [], equipments: [], types: [], difficulties: [] };
+        //return { exercises: [], muscles: [], equipments: [], types: [], difficulties: [] };
     }
 }

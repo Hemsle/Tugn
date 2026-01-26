@@ -5,7 +5,7 @@
     import {
         filteredExercises,
         selectedExercise,
-        searched
+        searched,
     } from "../stores/exerciseStore.js";
 </script>
 
@@ -17,8 +17,10 @@
         {#each $filteredExercises as exercise}
             <button
                 type="button"
-                on:click={() => selectedExercise.set(exercise)}
-                on:click={() => searched.set(false)}
+                onclick={() => {
+                    selectedExercise.set(exercise);
+                    searched.set(false);
+                }}
                 class="exercise-item"
             >
                 <h2>{exercise.name}</h2>

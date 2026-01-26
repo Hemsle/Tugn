@@ -2,12 +2,13 @@
 <script>
     import Selection from "./Selection.svelte";
     import { formatOption } from "../utils/format.js";
-    import { selectedExercise, searched } from "$lib/stores/exerciseStore.js";
+    import { selectedExercise, searched, addExercises, exerciseArray } from "$lib/stores/exerciseStore.js";
 
     export let data;
 
+    let selectedExercises = [];//Array för att skicka valda övningar till en rutin
+
     const exercises = data.exercises || [];
-    console.log("Exercises:", exercises);
 </script>
 
 <div id="library">
@@ -19,8 +20,10 @@
     {#each exercises as exercise}
         <button
             type="button"
-            on:click={() => selectedExercise.set(exercise)}
-            on:click={() => searched.set(false)}
+            onclick={() => {
+                selectedExercise.set(exercise);
+                searched.set(false);
+            }}
             class="exercise-item"
         >
             <h2>
@@ -31,13 +34,12 @@
     {/each}
 </div>
 
+
 <style lang="scss">
     #library {
-        font-family: "DM sans", sans-serif;
         height: 20%;
         margin: 2rem;
         h2 {
-            font-family: "DM sans", sans-serif;
             position: absolute;
             top: 19rem;
         }
@@ -46,7 +48,7 @@
         display: flex;
         flex-wrap: wrap;
         overflow-x: auto;
-        height: 62rem;
+        height: 73%;
         margin: 2rem;
         padding: 1rem;
         padding-top: 0rem;
@@ -75,8 +77,10 @@
                 border-radius: 1rem;
                 border-bottom: 0.3rem solid rgb(214, 214, 214);
 
-                &:active{
-                    border: 0.1rem, solid rgb(199, 199, 199);
+                &:active {
+                    border:
+                        0.1rem,
+                        solid rgb(199, 199, 199);
                     border-bottom: 0.3rem solid rgb(214, 214, 214);
                 }
             }

@@ -1,11 +1,23 @@
 <!--$lib/components/Exercise.svelte-->
 <script>
-    import { selectedExercise } from "$lib/stores/exerciseStore";
+    import { filteredExercises, searched, selectedExercise} from "$lib/stores/exerciseStore";//Man väljer en övning från library eller filteredExercises
     import { formatOption } from "../utils/format.js";
+    
+    function back() {
+        if (filteredExercises === []) {  
+            searched.set(false);  
+            selectedExercise.set(null);
+            filteredExercises === [];   
+        } else {    
+            selectedExercise.set(null);
+            searched.set(true);
+        } 
+    }
 </script>
 
 <div id="chosenExercise">
     {#if $selectedExercise}
+        <button onclick={back}>Back</button>
         <h1>{$selectedExercise.name}</h1>
         <h3>Muscle: {formatOption($selectedExercise.muscle)}</h3>
         <h3>Equipment: {formatOption($selectedExercise.equipment)}</h3>
@@ -15,20 +27,25 @@
             <h2>Instructions:</h2>
             <p>{$selectedExercise.instructions}</p>
         </div>
-    {:else}
+        <div>
+            <h2>Safety Information</h2>
+            <p>{$selectedExercise.safety_info}</p>
+        </div>
+    {:else }
         <h1>No exercise selected</h1>
-        <img src="icons/tugnIcon.png" alt="Hammare" 
-			/>
+        <img src="icons/tugnIcon.png" alt="Hammare" />
     {/if}
 </div>
 
 <style lang="scss">
     #chosenExercise {
+        font-family: "DM Sans", sans-serif;
         margin: 2rem;
         height: 94%;
         padding: 4rem;
         border: 0.1rem solid rgb(231, 231, 231);
         border-radius: 1.5rem;
+        overflow-x: auto;
         h1 {
             font-size: 4rem;
             font-weight: large;
@@ -40,10 +57,8 @@
         div {
             margin-top: 1rem;
             padding: 1rem;
-            overflow-x: auto;
             border: 0.1rem solid rgb(231, 231, 231);
             border-radius: 1.5rem;
-            max-height: 75%;
             h2 {
                 font-size: 2rem;
                 position: sticky;
