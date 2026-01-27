@@ -3,7 +3,8 @@
     import { goto } from "$app/navigation";
 
     import Library from "$lib/components/Library.svelte";
-    import { addExercises } from "$lib/stores/exerciseStore.js"; //addExercises true menar att man väljer övningar från library
+    import Searched from "$lib/components/Searched.svelte";
+    import { addExercises, searched } from "$lib/stores/exerciseStore.js"; //addExercises true menar att man väljer övningar från library
 
     export let data;
 
@@ -34,6 +35,12 @@
         <div class="exercise">
             <p>För varje övning har en egen liten div</p>
         </div>
+
+        {#if $searched && showLibrary}
+        <section id="findExercises">
+            <Searched />
+        </section>
+        {/if}
 
         <button
             onclick={() => {
@@ -80,6 +87,12 @@
         #workoutInfo {
             width: 90%;
 
+            #findExercises {
+                height: 59.5rem;
+                .exercise-list{
+                    overflow-x: auto;
+                }
+            }
             #addExercise {
                 display: flex;
                 align-items: center;

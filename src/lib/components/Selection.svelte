@@ -9,15 +9,10 @@
     } from "../stores/exerciseStore";
 
     export let data;
-
-    console.log(data); 
     
     const exercises = data.exercises || [];
     const muscles = data.muscles || [];
     const equipments = data.equipments || [];
-
-    console.log(equipments);
-
     const types = data.types || [];
     const difficulties = data.difficulties || [];
 
@@ -33,7 +28,9 @@
 
         const results = exercises.filter((exercise) => {
             const muscleMatch = selectedMuscle === "all_muscles" || exercise.muscle === selectedMuscle;
-            const equipmentMatch = selectedEquipment === "all_equipments" || exercise.equipment === selectedEquipment;
+            const equipmentMatch = selectedEquipment === "all_equipments" || (exercise.equipments && exercise.equipments.includes(selectedEquipment));
+
+
             const typeMatch =selectedType === "all_types" || exercise.type === selectedType;
             const difficultyMatch = selectedDifficulty === "all_difficulties" || exercise.difficulty === selectedDifficulty;
 
@@ -44,52 +41,14 @@
 
             return muscleMatch && equipmentMatch && typeMatch && difficultyMatch && termsSearch;
         });
-
         //om ändringar sker
-        if(query !== "" || selectedMuscle !== "all_muscles" || selectedEquipment !== "all_equipments" || selectedType !== "all_types" || selectedDifficulty !== "all_difficulties") {
+        if(query !== "" || selectedMuscle !== "all_muscles" || selectedEquipment !== "all_equipments" 
+        || selectedType !== "all_types" || selectedDifficulty !== "all_difficulties") {
             filteredExercises.set(results);
             searched.set(true); 
         }
     }
 
-    //**
-    //    function search() {
-    //        if (
-    //            selectedMuscle === "all_muscles" &&
-    //            selectedEquipment === "all_equipments" &&
-    //            selectedType === "all_types" &&
-    //            selectedDifficulty === "all_difficulties"
-    //        ) {
-    //            alert("Please select at least one filter before searching.");
-    //            console.log(data.exercises);
-    //            console.log(data.muscles);
-    //            console.log(data.equipments);
-    //            console.log(data.difficulties);
-    //            return;
-    //        }
-    //
-    //        const results = exercises.filter((exercise) => {
-    //            const muscleMatch =
-    //                selectedMuscle === "all_muscles" ||
-    //                exercise.muscle === selectedMuscle;
-    //            const equipmentMatch =
-    //                selectedEquipment === "all_equipments" ||
-    //                exercise.equipment === selectedEquipment;
-    //            const typeMatch =
-    //                selectedType === "all_types" || exercise.type === selectedType;
-    //            const difficultyMatch =
-    //                selectedDifficulty === "all_difficulties" ||
-    //                exercise.difficulty === selectedDifficulty;
-    //
-    //            return (
-    //                muscleMatch && equipmentMatch && typeMatch && difficultyMatch
-    //            );
-    //        });
-    //
-    //        searched.set(true);
-    //        filteredExercises.set(results); // Uppdaterar store, de sorterade övningarna skickas sedan till searhed
-    //        console.log("Filtered Exercises:", results);
-    //    }
 
     function resetFilters() {
         selectedMuscle = "all_muscles";

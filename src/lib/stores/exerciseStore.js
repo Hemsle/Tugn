@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 
 export const filteredExercises = writable([]);
-export const searched = writable([]);
+export const searched = writable(false);
 export const selectedExercise = writable(null);
 export const addExercises = writable(null);
 export const exerciseArray = writable(null); 

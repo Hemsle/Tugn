@@ -1,17 +1,16 @@
 <!--$lib/components/Exercise.svelte-->
 <script>
-    import { filteredExercises, searched, selectedExercise} from "$lib/stores/exerciseStore";//Man väljer en övning från library eller filteredExercises
+    import { exerciseArray, filteredExercises, searched, selectedExercise} from "$lib/stores/exerciseStore";//Man väljer en övning från library eller filteredExercises
     import { formatOption } from "../utils/format.js";
     
     function back() {
-        if (filteredExercises === []) {  
-            searched.set(false);  
-            selectedExercise.set(null);
-            filteredExercises === [];   
-        } else {    
-            selectedExercise.set(null);
+        if ($filteredExercises.length > 0) {  
             searched.set(true);
+        } else {    
+            searched.set(false);
+            filteredExercises.set([]);  
         } 
+        selectedExercise.set(null);
     }
 </script>
 
@@ -20,7 +19,7 @@
         <button onclick={back}>Back</button>
         <h1>{$selectedExercise.name}</h1>
         <h3>Muscle: {formatOption($selectedExercise.muscle)}</h3>
-        <h3>Equipment: {formatOption($selectedExercise.equipment)}</h3>
+        <h3>Equipments: {$selectedExercise.equipments.map(e => formatOption(e)).join(', ')}</h3>
         <h3>Type: {formatOption($selectedExercise.type)}</h3>
         <h3>Difficulty: {formatOption($selectedExercise.difficulty)}</h3>
         <div>

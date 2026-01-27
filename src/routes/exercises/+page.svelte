@@ -12,7 +12,7 @@
 <section id="exerciseInfo">
     {#if $searched === true}
     <Searched />
-    {:else if $searched === false}
+    {:else }
     <Exercise />
     {/if}
 </section>
