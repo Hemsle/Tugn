@@ -46,24 +46,37 @@ button {
     padding: 1rem;
     border: 0.1rem solid rgb(231, 231, 231);
     border-radius: 1.5rem;
-    .exercise-item {
-        width: 100%;
-        background-color: white;
-        border: none;
-        padding: 2rem;
-        text-align: left;
-        font-family: "DM sans", sans-serif;
+}
+
+#chosenExercise {
+    font-family: "DM Sans", sans-serif;
+    margin: 2rem;
+    height: 94%;
+    padding: 4rem;
+    border: 0.1rem solid rgb(231, 231, 231);
+    border-radius: 1.5rem;
+    overflow-x: auto;
+    h1 {
+        font-size: 4rem;
+        font-weight: large;
+    }
+    h3 {
+        font-size: 1.5rem;
+        padding-left: 0.5rem;
+    }
+    div {
+        margin-top: 1rem;
+        padding: 1rem;
+        border: 0.1rem solid rgb(231, 231, 231);
+        border-radius: 1.5rem;
         h2 {
             font-size: 2rem;
+            position: sticky;
         }
         p {
-            font-size: 1.5rem;
-            font-weight: 500;
-        }
-        &:hover {
-            background-color: rgb(231, 231, 231);
-            border: 0.1 rem solid rgb(231, 231, 231);
-            border-radius: 1rem;
+            font-size: 2rem;
+            margin-left: 1.5rem;
+            margin-right: 1.5rem;
         }
     }
 }

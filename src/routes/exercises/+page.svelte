@@ -4,9 +4,15 @@
     import Searched from "$lib/components/Searched.svelte"; 
     import Exercise from "$lib/components/Exercise.svelte";
 
-    import { searched } from "$lib/stores/exerciseStore";
+    import { searched, filteredExercises, selectedExercise, addExercises } from "$lib/stores/exerciseStore";
+    filteredExercises.set([]);
+    selectedExercise.set(null);
+    addExercises.set(false);
+    searched.set(false); 
 
-    export let data;//från +layout.server.js 
+    let { data } = $props();;//från +layout.server.js 
+
+
 </script>
 
 <section id="exerciseInfo">

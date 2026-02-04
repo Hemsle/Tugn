@@ -4,11 +4,17 @@
 
     import Library from "$lib/components/Library.svelte";
     import Searched from "$lib/components/Searched.svelte";
-    import { addExercises, searched } from "$lib/stores/exerciseStore.js"; //addExercises true menar att man väljer övningar från library
+    import { formatOption } from "$lib/utils/format.js";
+    import {
+        addExercises,
+        searched,
+        selectedExercise,
+        filteredExercises,
+    } from "$lib/stores/exerciseStore.js"; //addExercises true menar att man väljer övningar från library
 
-    export let data;
+    let { data } = $props();
 
-    let showLibrary = false;
+    let showLibrary = $state(false);
 
     function close() {
         goto("/routines");
@@ -16,6 +22,15 @@
 
     function toggleLibrary() {
         showLibrary = !showLibrary;
+        selectedExercise.set(null);
+    }
+
+    function back() {
+        if($filteredExercises.length > 0) {
+        searched.set(true);
+        }
+        
+        selectedExercise.set(null);
     }
 </script>
 
@@ -36,11 +51,34 @@
             <p>För varje övning har en egen liten div</p>
         </div>
 
-        {#if $searched && showLibrary}
         <section id="findExercises">
-            <Searched />
+            {#if $searched && showLibrary}
+                <Searched />
+            {:else if $selectedExercise}
+                <div id="chosenExercise">
+                    <button onclick={back}>Back</button>
+                    <h1>{$selectedExercise.name}</h1>
+                    <h3>Muscle: {formatOption($selectedExercise.muscle)}</h3>
+                    <h3>
+                        Equipments: {$selectedExercise.equipments
+                            .map((e) => formatOption(e))
+                            .join(", ")}
+                    </h3>
+                    <h3>Type: {formatOption($selectedExercise.type)}</h3>
+                    <h3>
+                        Difficulty: {formatOption($selectedExercise.difficulty)}
+                    </h3>
+                    <div>
+                        <h2>Instructions:</h2>
+                        <p>{$selectedExercise.instructions}</p>
+                    </div>
+                    <div>
+                        <h2>Safety Information</h2>
+                        <p>{$selectedExercise.safety_info}</p>
+                    </div>
+                </div>
+            {/if}
         </section>
-        {/if}
 
         <button
             onclick={() => {
@@ -67,7 +105,7 @@
         position: absolute;
         left: 33%;
         top: 2%;
-        height: 80%;
+        height: 93.8%;
         width: 40%;
         border: 0.1rem solid rgb(231, 231, 231);
         border-radius: 1.5rem;
@@ -88,9 +126,13 @@
             width: 90%;
 
             #findExercises {
-                height: 59.5rem;
-                .exercise-list{
-                    overflow-x: auto;
+                height: 73rem;
+                #chosenExercise {
+                    margin: 0;
+                    padding: 2rem;
+                    p{
+                        margin: 0rem;
+                    }
                 }
             }
             #addExercise {

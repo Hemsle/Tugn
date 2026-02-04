@@ -2,6 +2,12 @@
 <script>
     import { goto } from "$app/navigation";
 
+    import { searched, filteredExercises, selectedExercise, addExercises } from "$lib/stores/exerciseStore";
+    filteredExercises.set([]);
+    selectedExercise.set(null);
+    addExercises.set(false);
+    searched.set(false); 
+
     function startEmptyWorkoput() {
         goto("/routines/emptyWorkout");
     }
@@ -10,7 +16,7 @@
 <section>
     <h1>Quick Start</h1>
 
-    <button id="emptyWorkout" on:click={startEmptyWorkoput}>
+    <button id="emptyWorkout" onclick={startEmptyWorkoput}>
         <img src="/icons/plus.png" alt="plus">
         <p>Start Empty Workout</p>
     </button>

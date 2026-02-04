@@ -8,7 +8,7 @@
         selectedExercise,
     } from "../stores/exerciseStore";
 
-    export let data;
+    let { data } = $props();
     
     const exercises = data.exercises || [];
     const muscles = data.muscles || [];
@@ -16,14 +16,14 @@
     const types = data.types || [];
     const difficulties = data.difficulties || [];
 
-    let selectedMuscle = "all_muscles";
-    let selectedEquipment = "all_equipments";
-    let selectedType = "all_types";
-    let selectedDifficulty = "all_difficulties";
-    let searchTerms = ""; //gäller för sökning av utbudet.
+    let selectedMuscle = $state("all_muscles");
+    let selectedEquipment = $state("all_equipments");
+    let selectedType = $state("all_types");
+    let selectedDifficulty = $state("all_difficulties");
+    let searchTerms = $state("");
 
     //tanken är att denna ska ändras varje gång en variable ändras...
-    $: {
+    $effect(() => {
         const query = searchTerms.toLowerCase().trim();
 
         const results = exercises.filter((exercise) => {
@@ -31,7 +31,7 @@
             const equipmentMatch = selectedEquipment === "all_equipments" || (exercise.equipments && exercise.equipments.includes(selectedEquipment));
 
 
-            const typeMatch =selectedType === "all_types" || exercise.type === selectedType;
+            const typeMatch = selectedType === "all_types" || exercise.type === selectedType;
             const difficultyMatch = selectedDifficulty === "all_difficulties" || exercise.difficulty === selectedDifficulty;
 
             const termsSearch = query === "" ||
@@ -47,7 +47,7 @@
             filteredExercises.set(results);
             searched.set(true); 
         }
-    }
+    })
 
 
     function resetFilters() {

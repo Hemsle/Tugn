@@ -1,14 +1,21 @@
 <!--$lib/components/Library.svelte-->
 <script>
     import Selection from "./Selection.svelte";
+    import ExerciseItem from "./ExerciseItem.svelte";
     import { formatOption } from "../utils/format.js";
-    import { selectedExercise, searched, addExercises, exerciseArray } from "$lib/stores/exerciseStore.js";
+    import {
+        selectedExercise,
+        searched,
+        addExercises,
+        exerciseArray,
+    } from "$lib/stores/exerciseStore.js";
 
-    export let data;
+    let { data } = $props();
 
-    let selectedExercises = [];//Array för att skicka valda övningar till en rutin
+    let selectedExercises = $state([]); //Array för att skicka valda övningar till en rutin
 
     const exercises = data.exercises || [];
+
 </script>
 
 <div id="library">
@@ -18,22 +25,9 @@
 </div>
 <div class="exercise-list">
     {#each exercises as exercise}
-        <button
-            type="button"
-            onclick={() => {
-                selectedExercise.set(exercise);
-                searched.set(false);
-            }}
-            class="exercise-item"
-        >
-            <h2>
-                {exercise.name}
-                <p>{formatOption(exercise.muscle)}</p>
-            </h2>
-        </button>
+        <ExerciseItem {exercise} />
     {/each}
 </div>
-
 
 <style lang="scss">
     #library {
@@ -44,6 +38,7 @@
             top: 19rem;
         }
     }
+    
     .exercise-list {
         display: flex;
         flex-wrap: wrap;
@@ -54,36 +49,5 @@
         padding-top: 0rem;
         border: 0.1rem solid rgb(231, 231, 231);
         border-radius: 1.5rem;
-
-        .exercise-item {
-            font-family: "DM sans", sans-serif;
-            background-color: white;
-            border: none;
-            width: 100%;
-            padding: 2rem;
-            padding-left: 1rem;
-            text-align: left;
-            h2 {
-                font-size: medium;
-                p {
-                    font-size: small;
-                    font-weight: 500;
-                }
-            }
-
-            &:hover {
-                background-color: rgb(231, 231, 231);
-                border: 0.1 rem solid rgb(231, 231, 231);
-                border-radius: 1rem;
-                border-bottom: 0.3rem solid rgb(214, 214, 214);
-
-                &:active {
-                    border:
-                        0.1rem,
-                        solid rgb(199, 199, 199);
-                    border-bottom: 0.3rem solid rgb(214, 214, 214);
-                }
-            }
-        }
     }
 </style>
