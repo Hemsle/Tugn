@@ -23,7 +23,8 @@
     <Selection {data} />
     <h2>All Exercises</h2>
 </div>
-<div class="exercise-list">
+
+<div class="library-list">
     {#each exercises as exercise}
         <ExerciseItem {exercise} />
     {/each}
@@ -33,17 +34,12 @@
     #library {
         height: 20%;
         margin: 2rem;
-        h2 {
-            position: absolute;
-            top: 19rem;
-        }
     }
-    
-    .exercise-list {
-        display: flex;
-        flex-wrap: wrap;
+
+    .library-list {
         overflow-x: auto;
         height: 73%;
+        width: 22rem;
         margin: 2rem;
         padding: 1rem;
         padding-top: 0rem;

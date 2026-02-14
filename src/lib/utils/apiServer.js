@@ -7,7 +7,7 @@ import { API_NINJAS_KEY } from "$env/static/private"; //hämtar nyckeln från .e
 let exercisesPromise = null;
 const apiKey = API_NINJAS_KEY; //Sparar nyckeln till API
 
-const muscleGroups = [// Array med de specifika muskelgrupper som vi vill hämta data för från API:et
+const muscleGroups = [// Array med de specifika muskelgrupper som vi vill hämta från API:et
     'abdominals',
     'abductors',
     'adductors',
@@ -60,7 +60,6 @@ async function loadExercises() {
             exercises.map(ex => ex.equipments).flat()
         )].filter(item => item).sort();
 
-        //const equipments = [... new Set(exercises.map(ex => ex.equipment))].sort();
         const types = [...new Set(exercises.map(ex => ex.type))].sort();
         const difficulties = [... new Set(exercises.map(ex => ex.difficulty))];
 

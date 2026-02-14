@@ -23,6 +23,8 @@
     function toggleLibrary() {
         showLibrary = !showLibrary;
         selectedExercise.set(null);
+        filteredExercises.set([]);
+        searched.set(false);
     }
 
     function back() {
@@ -103,7 +105,7 @@
 <style lang="scss">
     #workout {
         position: absolute;
-        left: 33%;
+        left: 29.5%;
         top: 2%;
         height: 93.8%;
         width: 40%;
@@ -161,7 +163,7 @@
         border-radius: 1.5rem;
         border-bottom: 0.3rem solid rgb(214, 214, 214);
         height: 93.8%;
-        left: 75%;
+        left: 71%;
         width: 28rem;
         button {
             position: absolute;

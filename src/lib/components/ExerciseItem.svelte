@@ -74,12 +74,13 @@
 
     {:else if view === "searched"}
     <!--For searched-->
-    <div class="exercise-meta"><h2 id="searched">{exercise.name}</h2>
+    <h2 id="searched">{formatOption(exercise.name)}</h2>
+    <div class="exercise-meta">
+        <p class="psearch">Primary Muscle: <strong><small>{formatOption(exercise.muscle)}</small></strong></p>
         {#if $addExercises}
         <p class="hold-info">Hold for info</p>
-    {/if}
+        {/if}
     </div>
-    <p class="psearch">Primary Muscle: <strong><small>{formatOption(exercise.muscle)}</small></strong></p>
     <p class="psearch">Equipments: <strong><small>{exercise.equipments.map(e => formatOption(e)).join(', ')}</small></strong></p>
     <p class="psearch">Exercise Type: <strong><small>{formatOption(exercise.type)}</small></strong></p>
     <p class="psearch">Difficulty: <strong><small>{formatOption(exercise.difficulty)}</small></strong></p>

@@ -1,16 +1,21 @@
 <!--$lib/components/Exercise.svelte-->
 <script>
-    import { exerciseArray, filteredExercises, searched, selectedExercise} from "$lib/stores/exerciseStore";//Man väljer en övning från library eller filteredExercises
+    import {
+        exerciseArray,
+        filteredExercises,
+        searched,
+        selectedExercise,
+    } from "$lib/stores/exerciseStore"; //Man väljer en övning från library eller filteredExercises
     import { formatOption } from "../utils/format.js";
 
     function back() {
-    if ($filteredExercises.length > 0) {  
-        searched.set(true);
-    } else {    
-        searched.set(false);
-        filteredExercises.set([]);  
-    } 
-    selectedExercise.set(null);
+        if ($filteredExercises.length > 0) {
+            searched.set(true);
+        } else {
+            searched.set(false);
+            filteredExercises.set([]);
+        }
+        selectedExercise.set(null);
     }
 </script>
 
@@ -19,7 +24,11 @@
         <button onclick={back}>Back</button>
         <h1>{$selectedExercise.name}</h1>
         <h3>Muscle: {formatOption($selectedExercise.muscle)}</h3>
-        <h3>Equipments: {$selectedExercise.equipments.map(e => formatOption(e)).join(', ')}</h3>
+        <h3>
+            Equipments: {$selectedExercise.equipments
+                .map((e) => formatOption(e))
+                .join(", ")}
+        </h3>
         <h3>Type: {formatOption($selectedExercise.type)}</h3>
         <h3>Difficulty: {formatOption($selectedExercise.difficulty)}</h3>
         <div>
@@ -30,39 +39,12 @@
             <h2>Safety Information</h2>
             <p>{$selectedExercise.safety_info}</p>
         </div>
-    {:else }
+    {:else}
         <h1>No exercise selected</h1>
-        <img src="icons/tugnIcon.png" alt="Hammare" />
+
     {/if}
 </div>
 
 <style lang="scss">
-
-    /* From Uiverse.io by SteveBloX */
-    img {
-        box-sizing: border-box;
-        width: 40rem;
-        background: rgba(217, 217, 217, 0.58);
-        border: 1px solid white;
-        box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
-        backdrop-filter: blur(5px);
-        border-radius: 17px;
-        text-align: center;
-        cursor: pointer;
-        transition: all 20s;
-        user-select: none;
-        font-weight: bolder;
-        color: black;
-
-        &:hover {
-            border: 1px solid black;
-            transform: scale(10) rotate(-90deg);
-        }
-
-        &:active {
-            transform: scale(0.001) rotateZ(90deg);
-            border-radius: 20rem;
-            box-shadow: 12rem 17rem 51rem rgba(0, 0, 0, 0.22);
-        }
-    }
+    
 </style>

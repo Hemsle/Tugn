@@ -10,11 +10,9 @@
     } from "../stores/exerciseStore.js";
 </script>
 
-<div>
-    <h1>Filtered Exercises</h1>
-</div>
 {#if $filteredExercises.length > 0}
     <div class="exercise-list">
+        <h1>Filtered exercises</h1>
         {#each $filteredExercises as exercise}
             <ExerciseItem {exercise} view="searched" />
         {/each}
@@ -27,6 +25,9 @@
 
 <style lang="scss">
     div {
-        margin: 2rem;
+        margin: 1rem;
+        h1 {
+            margin-left: 1rem;
+        }
     }
 </style>

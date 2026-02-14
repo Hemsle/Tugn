@@ -9,7 +9,7 @@
     } from "../stores/exerciseStore";
 
     let { data } = $props();
-    
+
     const exercises = data.exercises || [];
     const muscles = data.muscles || [];
     const equipments = data.equipments || [];
@@ -24,33 +24,61 @@
 
     //tanken är att denna ska ändras varje gång en variable ändras...
     $effect(() => {
-        const query = searchTerms.toLowerCase().trim();
+        const query = searchTerms.toLowerCase().trim();//detta funkar inte än och funderar på att detta eventuellt blir lättre med databaser
 
-        const results = exercises.filter((exercise) => {
-            const muscleMatch = selectedMuscle === "all_muscles" || exercise.muscle === selectedMuscle;
-            const equipmentMatch = selectedEquipment === "all_equipments" || (exercise.equipments && exercise.equipments.includes(selectedEquipment));
+        const results = exercises.filter((exercise) => {//går igenom att övningar och jämför vad som är i selection
+            const muscleMatch =
+                selectedMuscle === "all_muscles" ||
+                exercise.muscle === selectedMuscle;
+            
+            //övningars equipment kan bestå av tom array eller en array med flera equipments
+            const equipmentMatch =
+                selectedEquipment === "all_equipments" ||
+                (exercise.equipments &&
+                    exercise.equipments.includes(selectedEquipment));
 
+            const typeMatch =
+                selectedType === "all_types" || exercise.type === selectedType;
+            const difficultyMatch =
+                selectedDifficulty === "all_difficulties" ||
+                exercise.difficulty === selectedDifficulty;
+            
+            const termsSearch =
+                query === "" ||
+                [exercise.name, exercise.muscle, exercise.equipment].some(
+                    (field) => field?.toLowerCase().includes(query),
+                );
 
-            const typeMatch = selectedType === "all_types" || exercise.type === selectedType;
-            const difficultyMatch = selectedDifficulty === "all_difficulties" || exercise.difficulty === selectedDifficulty;
-
-            const termsSearch = query === "" ||
-                exercise.name.toLowerCase().includes(query) ||
-                exercise.muscle.toLowerCase().includes(query) ||
-                exercise.equipment.toLowerCase().includes(query);
-
-            return muscleMatch && equipmentMatch && typeMatch && difficultyMatch && termsSearch;
+            return (//returnerar värden i results
+                muscleMatch &&
+                equipmentMatch &&
+                typeMatch &&
+                difficultyMatch &&
+                termsSearch
+            );
         });
         //om ändringar sker
-        if(query !== "" || selectedMuscle !== "all_muscles" || selectedEquipment !== "all_equipments" 
-        || selectedType !== "all_types" || selectedDifficulty !== "all_difficulties") {
+        if (//om selection inte är helt tom så filtreras sökningen efter results
+            query !== "" ||
+            selectedMuscle !== "all_muscles" ||
+            selectedEquipment !== "all_equipments" ||
+            selectedType !== "all_types" ||
+            selectedDifficulty !== "all_difficulties"
+        ) {
             filteredExercises.set(results);
-            searched.set(true); 
+            searched.set(true);//ser till att visa sökresultatet 
         }
-    })
+    });
 
-
-    function resetFilters() {
+    function resetFilters() {//försklarar sig själv, resetar allt, filter, sökning osv... 
+        if (
+            selectedMuscle === "all_muscles" &&
+            selectedEquipment === "all_equipments" &&
+            selectedType === "all_types" &&
+            selectedDifficulty === "all_difficulties"
+        ) {
+            console.log(data.exercises);
+        }
         selectedMuscle = "all_muscles";
         selectedEquipment = "all_equipments";
         selectedType = "all_types";
@@ -93,7 +121,7 @@
 <input
     id="searchfield"
     type="text"
-    bind:value={searchTerms}
+    bindvalue={searchTerms}
     placeholder="Search for exercises..."
 />
 <button onclick={resetFilters}> Reset </button>

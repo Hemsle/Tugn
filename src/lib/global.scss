@@ -37,11 +37,10 @@ button {
     }
 }
 
-
 //tillhör Searched.svelte
 .exercise-list {
-    margin-top: -1.2rem;
-    height: 89%;
+    max-height: 92.3vh;
+    height: 97%;
     overflow-x: auto;
     padding: 1rem;
     border: 0.1rem solid rgb(231, 231, 231);
@@ -50,6 +49,7 @@ button {
 
 #chosenExercise {
     font-family: "DM Sans", sans-serif;
+    max-height: 90.2vh;
     margin: 2rem;
     height: 94%;
     padding: 4rem;

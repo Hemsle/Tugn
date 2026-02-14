@@ -19,16 +19,32 @@
             
             // Lagra datan från $page.data.apiData i ditt globala store
             exerciseData.set($page.data.apiData);
-
-		
         }
     });
-
 
 </script>
 
 <svelte:head>
     <link rel="icon" href={tugnIcon} />
 </svelte:head>
+
+<div>
 <Header />
-{@render children?.()}
+<div id="box">
+    {@render children?.()}
+</div>
+</div>
+
+<style lang="scss">
+    #box {
+        flex-direction: row;
+        flex: 1 1 0%;
+        -webkit-box-pack: center;
+        justify-content: center;
+    }
+    div{
+        display: flex;
+        height: 100vh;
+        justify-content: space-between;
+    }
+</style>

@@ -3,34 +3,31 @@
 </script>
 
 <header>
-    <img src="icons/tugnIcon.png" alt="Hammare"/>
-    <h1>TUGN</h1>
+    <h1>TUGN <img src="icons/tugnIcon.png" alt="Hammare" /> </h1>
     <Nav />
 </header>
 
 <style lang="scss">
     header {
         display: inline-block;
-        width: 22rem;
-        position: fixed;
-        height: 100%;
+        min-height: 100vh;
         background-color: var(--primary);
         color: var(--fourth);
-        img {
-            width: 12rem;
-            position: absolute;
-            top: -1rem;
-            left: 10rem;
-            z-index: -1;
-        }
 
         h1 {
-            position: relative;
-            z-index: 0;
+            width: 18rem;
+            display: flex;
             font-size: 3rem;
-            font-weight: bold;
             margin: 2rem;
-            margin-bottom: 4rem;
+            height: 6rem;
+            align-items: center;
+            letter-spacing: 0.5rem;
+
+            img {
+                position: relative;
+                left: -1rem;
+                width: 9rem;
+            }
         }
     }
 </style>

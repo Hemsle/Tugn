@@ -23,6 +23,7 @@
                 align-items: center;
                 justify-content: center;
                 height: 5rem;
+                width: 19rem;
                 border-radius: 1rem;
                 margin-left: 1.5rem;
                 margin-right: 1.5rem;
