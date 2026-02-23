@@ -8,6 +8,8 @@
         searched,
         addExercises,
         exerciseArray,
+        filteredExercises,
+        showLibrary
     } from "$lib/stores/exerciseStore.js";
 
     let { data } = $props();
@@ -16,10 +18,19 @@
 
     const exercises = data.exercises || [];
 
+    function toggleLibrary() {
+        showLibrary.set(false);
+        selectedExercise.set(null);
+        filteredExercises.set([]);
+        searched.set(false);
+    }
+
 </script>
 
 <div id="library">
-    <h1>Library</h1>
+    <h1>Library 
+        <button id="closeLibrary" onclick={toggleLibrary}>close</button>
+    </h1>
     <Selection {data} />
     <h2>All Exercises</h2>
 </div>
@@ -34,12 +45,15 @@
     #library {
         height: 20%;
         margin: 2rem;
+        h1{
+            display: flex;
+            justify-content: space-between;
+        }
     }
 
     .library-list {
         overflow-x: auto;
         height: 73%;
-        width: 22rem;
         margin: 2rem;
         padding: 1rem;
         padding-top: 0rem;

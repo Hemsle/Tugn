@@ -9,18 +9,20 @@
         filteredExercises,
         selectedExercise,
         addExercises,
+        showLibrary
     } from "$lib/stores/exerciseStore";
     filteredExercises.set([]);
     selectedExercise.set(null);
     addExercises.set(false);
     searched.set(false);
+    showLibrary.set(false);
 
     let { data } = $props(); //från +layout.server.js
 
     console.log(data);
 </script>
 
-<div id="content">
+<div class="content">
     <section id="exerciseInfo">
         {#if $searched === true}
             <Searched />
@@ -35,7 +37,7 @@
 </div>
 
 <style lang="scss">
-    #content {
+    .content {
         display: flex;
         -webkit-box-pack: center;
         max-width: 100rem;
@@ -59,12 +61,4 @@
         height: 99.8%;
         width: 26rem;
     }
-
-    /*
-    #exerciseInfo {
-        height: 70%;
-        left: 25%;
-        width: 45%;
-    }
-    */
 </style>

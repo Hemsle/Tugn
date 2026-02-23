@@ -5,5 +5,6 @@ export const searched = writable(false);
 export const selectedExercise = writable(null);
 export const addExercises = writable(null);
 export const exerciseArray = writable(null); 
+export const showLibrary = writable(false); 
 
 export const exerciseData = writable(null);
