@@ -53,12 +53,12 @@
         border: 0.1rem solid rgb(231, 231, 231);
         border-radius: 1.5rem;
         border-bottom: 0.3rem solid rgb(214, 214, 214);
-        max-width: 63rem;
         width: 100%;
     }
 
     #search {
         height: 99.8%;
-        width: 26rem;
+        min-width: 28rem;
+        width: 28rem;
     }
 </style>

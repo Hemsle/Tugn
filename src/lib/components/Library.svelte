@@ -9,7 +9,7 @@
         addExercises,
         exerciseArray,
         filteredExercises,
-        showLibrary
+        showLibrary,
     } from "$lib/stores/exerciseStore.js";
 
     let { data } = $props();
@@ -24,12 +24,14 @@
         filteredExercises.set([]);
         searched.set(false);
     }
-
 </script>
 
 <div id="library">
-    <h1>Library 
-        <button id="closeLibrary" onclick={toggleLibrary}>close</button>
+    <h1>
+        Library
+        {#if $showLibrary}
+            <button id="closeLibrary" onclick={toggleLibrary}>close</button>
+        {/if}
     </h1>
     <Selection {data} />
     <h2>All Exercises</h2>
@@ -43,9 +45,13 @@
 
 <style lang="scss">
     #library {
+        display: flex;
         height: 20%;
         margin: 2rem;
-        h1{
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-end;
+        h1 {
             display: flex;
             justify-content: space-between;
         }

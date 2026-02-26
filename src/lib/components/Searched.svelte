@@ -28,6 +28,7 @@
         margin: 1rem;
         h1 {
             margin-left: 1rem;
+            margin-top: 1rem;
         }
     }
 </style>

@@ -24,13 +24,15 @@
 
     //tanken är att denna ska ändras varje gång en variable ändras...
     $effect(() => {
-        const query = searchTerms.toLowerCase().trim();//detta funkar inte än och funderar på att detta eventuellt blir lättre med databaser
+        //detta funkar inte än och funderar på att detta eventuellt blir lättre med databaser
+        const query = searchTerms.toLowerCase().replace(/-/g, ' ').trim();
 
-        const results = exercises.filter((exercise) => {//går igenom att övningar och jämför vad som är i selection
+        const results = exercises.filter((exercise) => {
+            //går igenom att övningar och jämför vad som är i selection
             const muscleMatch =
                 selectedMuscle === "all_muscles" ||
                 exercise.muscle === selectedMuscle;
-            
+
             //övningars equipment kan bestå av tom array eller en array med flera equipments
             const equipmentMatch =
                 selectedEquipment === "all_equipments" ||
@@ -42,35 +44,48 @@
             const difficultyMatch =
                 selectedDifficulty === "all_difficulties" ||
                 exercise.difficulty === selectedDifficulty;
-            
-            const termsSearch =
-                query === "" ||
-                [exercise.name, exercise.muscle, exercise.equipment].some(
-                    (field) => field?.toLowerCase().includes(query),
-                );
 
-            return (//returnerar värden i results
+            const termsMatch =
+                query === "" ||
+                exercise.name.toLowerCase().replace(/-/g, ' ').includes(query) ||
+                exercise.muscle.toLowerCase().includes(query) ||
+                exercise.type.toLowerCase().includes(query) ||
+                
+                (exercise.equipments &&
+                    exercise.equipments.some((eq) =>
+                        eq.toLowerCase().replace(/-/g, ' ').includes(query),
+                    ));
+
+            return (
+                //returnerar värden i results
                 muscleMatch &&
                 equipmentMatch &&
                 typeMatch &&
                 difficultyMatch &&
-                termsSearch
+                termsMatch
             );
         });
-        //om ändringar sker
-        if (//om selection inte är helt tom så filtreras sökningen efter results
+
+        const isFilter =
             query !== "" ||
             selectedMuscle !== "all_muscles" ||
             selectedEquipment !== "all_equipments" ||
             selectedType !== "all_types" ||
-            selectedDifficulty !== "all_difficulties"
-        ) {
+            selectedDifficulty !== "all_difficulties";
+
+        //om ändringar sker
+        if (isFilter) {
+            //om selection inte är helt tom så filtreras sökningen efter results
             filteredExercises.set(results);
-            searched.set(true);//ser till att visa sökresultatet 
+            searched.set(true); //ser till att visa sökresultatet
+        } else {
+            filteredExercises.set([]);
+            searched.set(false);
         }
     });
 
-    function resetFilters() {//försklarar sig själv, resetar allt, filter, sökning osv... 
+    function resetFilters() {
+        //försklarar sig själv, resetar allt, filter, sökning osv...
         if (
             selectedMuscle === "all_muscles" &&
             selectedEquipment === "all_equipments" &&
@@ -121,7 +136,7 @@
 <input
     id="searchfield"
     type="text"
-    bindvalue={searchTerms}
+    bind:value={searchTerms}
     placeholder="Search for exercises..."
 />
 <button onclick={resetFilters}> Reset </button>
