@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+:root {
+    --primary: #1B3C53;
+    --secondary: #234C6A;
+    --third: #456882;
+    --third-light: #5c85a5;
+    --fourth: #D2C1B6;
+    --border: rgb(231, 231, 231);
+    --gray: #efefef;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+html {
+    font-size: 62.5%;
+    font-family: "DM sans", sans-serif;
+
+    button,
+    select,
+    input {
+        font-family: "DM sans", sans-serif;
+        cursor: pointer;
+    }
+}
+
+body {
+    background-color: #f8f8f8;
+
+    p {
+        font-size: 1.3rem;
+    }
+}
+
+select {
+    border: none;
+}
+
+button {
+    border: none;
+    border-radius: 1rem;
+    font-size: medium;
+    font-weight: 600;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgb(207, 207, 207);
+    }
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    -webkit-box-pack: center;
+    max-width: 100rem;
+    width: 100%;
+    gap: 2rem;
+    align-items: flex-start;
+    padding: 2rem;
+}
+
+//tillhör Searched.svelte
+.exercise-list {
+    max-height: 75rem;
+    height: 100%;
+    overflow-x: auto;
+    padding: 1rem;
+    border: 0.1rem solid var(--border);
+    border-radius: 1.5rem;
+}
+
+#chosen-exercise {
+    font-family: "DM Sans", sans-serif;
+    max-height: 77rem;
+    height: 100%;
+    padding: 2rem;
+    overflow-x: auto;
+
+    h1 {
+        font-size: 3rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+        padding-left: 0.5rem;
+    }
+
+    div {
+        margin-top: 1rem;
+        padding: 1rem;
+        border: 0.1rem solid rgb(231, 231, 231);
+        border-radius: 1.5rem;
+
+        h2 {
+            font-size: 2rem;
+            position: sticky;
+        }
+
+        p {
+            font-size: 2rem;
+            margin-left: 1.5rem;
+            margin-right: 1.5rem;
+        }
+    }
+}
+
+//för login och register
+#login-info {
+    display: flex;
+    position: relative;
+    bottom: 4%;
+    background-color: white;
+    border: 0.1rem solid rgb(231, 231, 231);
+    border-radius: 1.5rem;
+    border-bottom: 0.3rem solid rgb(214, 214, 214);
+    width: 100%;
+    max-width: 22rem;
+    padding: 2rem;
+    justify-content: center;
+    flex-direction: column;
+    align-items: flex-start;
+
+    input {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
+        width: 100%;
+        margin-bottom: 10px;
+        font-size: 1.3;
+    }
+
+    .submit {
+        padding: 0.5rem 1rem;
+        background-color: var(--primary, #333);
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+
+        &:hover {
+            background-color: var(--secondary);
+        }
+
+        &:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    }
+
+    h1 {
+        font-size: 2.3rem;
+    }
+
+    label {
+        font-size: 1.3rem;
+    }
+}
