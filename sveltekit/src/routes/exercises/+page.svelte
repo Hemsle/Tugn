@@ -21,7 +21,6 @@
 
     let { data } = $props(); //från +layout.server.js
 
-    console.log(data);
 </script>
 
 <div class="content">

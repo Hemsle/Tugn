@@ -77,7 +77,6 @@ if (empty($workoutIds)) {
     echo json_encode([
         "user" => $userData,
         "workouts" => [],
-        "stats" => $stats,
         "isFollowing" => $isFollowing
     ], JSON_UNESCAPED_UNICODE);
     exit;
