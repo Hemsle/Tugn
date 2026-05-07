@@ -11,18 +11,13 @@ if (strlen($query) < 2) {
     exit;
 }
 
-try {
-    //Söker användare som innehåller söksträngen
-    $stmt = $db->prepare("SELECT uid, username, display_name 
+$stmt = $db->prepare("SELECT uid, username, display_name 
         FROM user WHERE username LIKE :q OR display_name LIKE :q LIMIT 8;");
 
-    $searchTerm = "%" . $query . "%";
-    $stmt->bindValue(':q', $searchTerm, PDO::PARAM_STR);
-    $stmt->execute();
+$searchTerm = "%" . $query . "%";
+$stmt->bindValue(':q', $searchTerm, PDO::PARAM_STR);
+$stmt->execute();
 
-    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    echo json_encode($users);
-} catch (Exception $e) {
-    echo json_encode(["error" => $e->getMessage()]);
-}
+echo json_encode($users);

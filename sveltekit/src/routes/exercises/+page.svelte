@@ -44,7 +44,6 @@
         border-radius: 1.5rem;
         border-bottom: 0.3rem solid rgb(214, 214, 214);
         width: 100%;
-        max-height: 90rem;
     }
 
     #search {

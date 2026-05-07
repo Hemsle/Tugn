@@ -4,7 +4,7 @@
 
     let { data } = $props();
 
-    console.log("Profile data: ", data);
+    $inspect(data);
 
     let searchQuery = $state("");
     let searchResults = $state([]);

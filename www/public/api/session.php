@@ -16,19 +16,20 @@ $stmt->execute([$uid]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $followersQuery = $db->prepare('
-    SELECT u.username, u.display_name, u.uid 
+    SELECT u.username, u.display_name, u.uid, followed_at
     FROM user u
     JOIN user_follows f ON u.uid = f.follower_id
-    WHERE f.following_id = ?
-');
+    WHERE f.following_id = ? ORDER BY followed_at'
+    );
 $followersQuery->execute([$uid]);
 $user['followers'] = $followersQuery->fetchAll(PDO::FETCH_ASSOC);
 
 $followingQuery = $db->prepare('
-    SELECT u.username, u.display_name, u.uid
+    SELECT u.username, u.display_name, u.uid, followed_at
     FROM user u
     JOIN user_follows f ON u.uid = f.following_id 
-    WHERE f.follower_id = ?');
+    WHERE f.follower_id = ? ORDER BY followed_at'
+    );
 $followingQuery->execute([$uid]);
 $user['following'] = $followingQuery->fetchAll(PDO::FETCH_ASSOC);
 

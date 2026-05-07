@@ -10,7 +10,7 @@
     let loading = $state(false);
 
     const loggedOutParam = page.url.searchParams.get('loggedout');
-    let message = $state(page.url.searchParams.get('loggedout') === 'true' ? "Utloggad!" : "");
+    let message = $state(page.url.searchParams.get('loggedout') === 'true' ? "Logged out!" : "");
 
     onMount(async () => {
         // Vänta tills SvelteKit har renderat klart första gången
@@ -98,7 +98,7 @@
             </p>
         {/if}
 
-        <input class="submit" type="submit" disabled={loading}>
+        <input class="submit" type="submit" value="Log in" disabled={loading}>
 
     </form>
 

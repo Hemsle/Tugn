@@ -3,15 +3,17 @@
     import { goto } from "$app/navigation";
     let { data } = $props();
 
-    console.log(data);
+    $inspect(data);
+
+    let user = $derived(data.user);
+    let visitedUser = $derived(data.visitedUser);
 
     // Check om jag hamnat på min egen sida via [username]
-    if (data.user?.uid === data.visitedUser?.uid) {
-        goto("/profile");
-    }
+    $effect(() => {
+        if (user?.uid === visitedUser?.uid) {
+            goto("/profile");
+        }
+    });
 </script>
 
-<ProfilePage 
-    data={data}
-    isOwnProfile={false} 
-/>
+<ProfilePage {data} isOwnProfile={false} />

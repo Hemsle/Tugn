@@ -11,13 +11,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') exit;
 
 require_once('../inc/db.inc.php');
 
-$result = ['success' => false, 'message' => 'Något gick fel'];
+$result = ['success' => false, 'message' => 'Something went wrong'];
 
 $nameOrMail = trim($_POST['nameOrMail'] ?? '');
 $password  = $_POST['password'] ?? '';
 
 if (empty($nameOrMail) || empty($password)) {
-    $result['message'] = 'Vänligen fyll i alla fält korrekt';
+    $result['message'] = 'Fill in all fields accordingly';
     echo json_encode($result, JSON_UNESCAPED_UNICODE);
     exit;
 }
@@ -34,16 +34,16 @@ try {
             $_SESSION['username'] = $user['username'];
 
             $result['success'] = true;
-            $result['message'] = 'Inloggning lyckades!';
+            $result['message'] = 'Succesful login';
         } else {
-            $result['message'] = 'Felaktigt lösenord';
+            $result['message'] = 'Wrong password';
         }
     } else {
-        $result['message'] = 'Användaren hittades inte';
+        $result['message'] = 'No user';
     }
 
 } catch (PDOException $e) {
-    $result['message'] = 'Databasfel: ' . $e->getMessage();
+    $result['message'] = 'Server problem: ' . $e->getMessage();
 }
 
 echo json_encode($result, JSON_UNESCAPED_UNICODE);

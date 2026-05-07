@@ -45,12 +45,6 @@
 
 <style lang="scss">
     .content {
-        display: flex;
-        -webkit-box-pack: center;
-        max-width: 106rem;
-        width: 100%;
-        padding: 24px;
-        gap: 24px;
         align-items: flex-start;
         flex-direction: row;
         justify-content: flex-end;
@@ -64,7 +58,6 @@
             border-radius: 1.5rem;
             border-bottom: 0.3rem solid rgb(214, 214, 214);
             width: 28rem;
-            max-height: 90rem;
         }
     }
 </style>

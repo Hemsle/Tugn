@@ -151,7 +151,7 @@
         background-color: white;
         max-width: 63rem;
         width: 100%;
-        height: 99.8%;
+        height: 100%;
         border: 0.1rem solid rgb(231, 231, 231);
         border-radius: 1.5rem;
         border-bottom: 0.3rem solid rgb(214, 214, 214);
@@ -228,12 +228,13 @@
         }
 
         #workout-info {
+            display: flex;
+            flex-direction: column;
             width: 94%;
-            max-height: 81rem;
-            height: 100%;
+            height: calc(100% - 10.5rem);
 
             #find-exercises {
-                max-height: 75rem;
+                max-height: calc(100vh - 17.5rem);
                 height: 100%;
                 #chosen-exercise {
                     margin: 0;

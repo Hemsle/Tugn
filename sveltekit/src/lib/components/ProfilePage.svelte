@@ -1,13 +1,18 @@
 <script>
     import FollowStats from "$lib/components/FollowStats.svelte";
     import History from "$lib/components/History.svelte";
+    import Followlist from "$lib/components/Followlist.svelte";
+    import { goto } from "$app/navigation";
+    import Edit from "./Edit.svelte";
 
     let { data, isOwnProfile = false } = $props();
 
-    let isFollowing = $state(data.isFollowing);
-    let allWorkouts = $state(data.initialWorkouts || []);
+    let isFollowing = $derived(data.isFollowing);
+    let allWorkouts = $derived(data.initialWorkouts || []);
 
     let profileUser = $derived(isOwnProfile ? data.user : data.visitedUser);
+
+    let editProfile = $state(false);
 
     async function loadMore() {
         const offset = allWorkouts.length;
@@ -31,8 +36,8 @@
         const previousState = isFollowing;
         isFollowing = !isFollowing;
 
-        if (isFollowing) stats.followers++;
-        else stats.followers--;
+        if (isFollowing) profileUser.followers++;
+        else profileUser.followers--;
 
         const formData = new FormData();
         formData.append("following_id", profileUser.uid);
@@ -44,17 +49,19 @@
             });
             const result = await response.json();
 
+            window.location.reload();
+
             // Om servern säger något annat än vad vi trodde, korrigera (t.ex. vid fel)
             if (result.error) {
                 isFollowing = previousState;
-                if (isFollowing) stats.followers++;
-                else stats.followers--;
+                if (isFollowing) profileUser.followers++;
+                else profileUser.followers--;
             }
         } catch (e) {
             // Vid nätverksfel, återställ
             isFollowing = previousState;
-            if (isFollowing) stats.followers++;
-            else stats.followers--;
+            if (isFollowing) profileUser.followers++;
+            else profileUser.followers--;
         }
     }
 </script>
@@ -65,11 +72,13 @@
             <div class="name-follower">
                 <h1>{profileUser?.display_name}</h1>
 
-                <FollowStats {profileUser} {isOwnProfile}/>
+                <FollowStats {profileUser} {isOwnProfile} />
             </div>
 
             {#if isOwnProfile}
-                <button>Edit profile </button>
+                <button onclick={() => (editProfile = !editProfile)}
+                    >Edit profile</button
+                >
             {/if}
         </div>
         <h2>@{profileUser?.username}</h2>
@@ -92,18 +101,28 @@
         {/if}
     </section>
 
-    <section class="feed">
-        <h1>Workouts</h1>
-        {#each allWorkouts as workout}
-            <History {workout} {profileUser} />
-        {/each}
+    <div class="feed-follow">
+        <section class="feed">
+            <h1>Workouts</h1>
+            {#each allWorkouts as workout}
+                <History {workout} {profileUser} />
+            {/each}
 
-        {#if allWorkouts.length >= 10 && allWorkouts.length % 10 === 0}
-            <button onclick={loadMore}>Load More</button>
-        {:else if allWorkouts.length === 0}
-            <p style="margin: 1.8rem; margin-top: 0;">No workouts yet</p>
-        {/if}
-    </section>
+            {#if allWorkouts.length >= 10 && allWorkouts.length % 10 === 0}
+                <button onclick={loadMore}>Load More</button>
+            {:else if allWorkouts.length === 0}
+                <p style="margin: 1.8rem; margin-top: 0;">No workouts yet</p>
+            {/if}
+        </section>
+
+        <div class="right">
+            {#if editProfile}
+                <Edit {profileUser} />
+            {/if}
+
+            <Followlist {profileUser} />
+        </div>
+    </div>
 </section>
 
 <style lang="scss">
@@ -113,9 +132,9 @@
 
         .profile-info {
             background-color: white;
-            border: 0.1rem solid rgb(231, 231, 231);
+            border: 0.1rem solid var(--border);
             border-radius: 1.5rem;
-            border-bottom: 0.3rem solid rgb(214, 214, 214);
+            border-bottom: 0.3rem solid var(--bottom);
             width: 100%;
             padding: 2rem;
 
@@ -152,6 +171,7 @@
                 border: 1px solid var(--third);
                 background: var(--third);
                 color: white;
+                margin-top: 0.5rem;
 
                 .text-hover {
                     display: none; // Dölj Unfollow som standard
@@ -172,41 +192,51 @@
                         background-color: #fff5f5;
 
                         .text-normal {
-                            display: none; 
+                            display: none;
                         }
                         .text-hover {
-                            display: inline; 
+                            display: inline;
                         }
                     }
                 }
             }
         }
-
-        .feed {
+        .feed-follow {
             display: flex;
-            background-color: white;
-            border: 0.1rem solid rgb(231, 231, 231);
-            border-radius: 1.5rem;
-            border-bottom: 0.3rem solid rgb(214, 214, 214);
-            width: 65%;
-            flex-direction: column;
-            h1 {
-                margin: 1.8rem;
-                margin-bottom: 0;
+            width: 100%;
+            gap: 2rem;
+            .feed {
+                display: flex;
+                background-color: white;
+                border: 0.1rem solid var(--border);
+                border-radius: 1.5rem;
+                border-bottom: 0.3rem solid var(--bottom);
+                width: 65%;
+                flex-direction: column;
+                h1 {
+                    margin: 1.8rem;
+                    margin-bottom: 0;
+                }
+
+                button {
+                    margin: 1.5rem;
+                    margin-top: 0;
+                    padding: 0.5rem;
+                    background-color: var(--third);
+                    color: white;
+                    border: none;
+                    border-radius: 1rem;
+
+                    &:hover {
+                        background-color: var(--third-light);
+                    }
+                }
             }
 
-            button {
-                margin: 1.5rem;
-                margin-top: 0;
-                padding: 0.5rem;
-                background-color: var(--third);
-                color: white;
-                border: none;
-                border-radius: 1rem;
-
-                &:hover {
-                    background-color: var(--third-light);
-                }
+            .right {
+                display: block;
+                max-width: 31.5rem;
+                width: 100%;
             }
         }
     }

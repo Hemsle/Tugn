@@ -12,7 +12,7 @@
     let message = $state("");
 
     async function handleRegister() {
-        if (loading) return; // Avbryt om vi redan skickar
+        if (loading) return; // Avbryt om vi redan 
 
         loading = true;
         message = "";
@@ -94,7 +94,7 @@
                 </p>
             {/if}
 
-            <input class="submit" type="submit" disabled={loading} />
+            <input class="submit" type="submit" value="Create user" disabled={loading} />
         </form>
 
         <p>

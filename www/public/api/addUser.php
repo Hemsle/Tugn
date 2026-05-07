@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once('../inc/db.inc.php');
 
-$result = ['success' => false, 'message' => 'Något gick fel'];
+$result = ['success' => false, 'message' => 'Something went wrong'];
 
 // Validera indata 
 $firstname = trim($_POST['firstname'] ?? '');
@@ -23,7 +23,7 @@ $email     = trim($_POST['email'] ?? '');
 $password  = $_POST['password'] ?? '';
 
 if (empty($firstname) || empty($surname) || empty($username) || empty($email) || strlen($password) < 6) {
-    $result['message'] = 'Vänligen fyll i alla fält korrekt (lösenord minst 6 tecken)';
+    $result['message'] = 'Please fill in all fields correctly (minium of 6 characters for password)';
     echo json_encode($result, JSON_UNESCAPED_UNICODE);
     exit;
 }
@@ -33,7 +33,7 @@ try {
     $checkStmt = $db->prepare("SELECT uid FROM user WHERE username = ? OR email = ?");
     $checkStmt->execute([$username, $email]);
     if ($checkStmt->fetch()) {
-        $result['message'] = 'Användarnamnet eller e-postadressen är redan tagen';
+        $result['message'] = 'Username or email already in use';
         echo json_encode($result, JSON_UNESCAPED_UNICODE);
         exit;
     }
@@ -55,7 +55,7 @@ try {
 
     if ($inserted) {
         $result['success'] = true;
-        $result['message'] = 'Användare skapad';
+        $result['message'] = 'User created';
     }
 } catch (PDOException $e) {
     $result['message'] = 'Databasfel: ' . $e->getMessage();

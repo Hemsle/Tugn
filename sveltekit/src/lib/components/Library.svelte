@@ -14,7 +14,7 @@
 
     let { data } = $props();
 
-    const exercises = data.exercises || [];
+    const exercises = $derived(data.exercises);
 
     function toggleLibrary() {
         showLibrary.set(false);
@@ -58,7 +58,7 @@
 
     .library-list {
         overflow-x: auto;
-        max-height: 63rem;
+        max-height: calc(100vh - 31rem);
         height: 100%;
         margin: 2rem;
         padding: 1rem;

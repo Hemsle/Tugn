@@ -1,14 +1,21 @@
 <script>
+    import { workout } from "$lib/stores/workoutStore";
+
     let { profileUser, isOwnProfile } = $props();
 
-    let stats = $state({
-        workoutCount: profileUser.workoutCount,    
-        followers: profileUser.followers,
-        following: profileUser.following,
+    let workoutCount = $derived(profileUser.workoutCount);
+    let followers = $derived(profileUser.followers);
+    let following = $derived(profileUser.following);
+
+    let stats = $derived({
+        workoutCount,
+        followers,
+        following,
     });
 </script>
 
 <div class="stats-grid">
+{#key stats.following}
     <div class="stat-item">
         <span class="label">Workouts</span>
         <span class="value">{stats?.workoutCount}</span>
@@ -21,6 +28,8 @@
         <span class="label">Following</span>
         <span class="value">{stats?.following?.length}</span>
     </div>
+{/key}
+    
 </div>
 
 <style lang="scss">
